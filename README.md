@@ -27,8 +27,18 @@ func TestFuzzyPath(t *testing.T) {
   rand.Seed(time.Now().UnixNano())
   b := make([]byte, 100)
   top := 100000
-  fmt.Printf("/rpath fuzzy [
-  ]")
+  fmt.Printf("/rpath fuzzy [  ]\rpath fuzzy [")
+  for i := 0; i < top; i++ {
+    if i%(top/20) == 1 {
+      fmt.Pringf(".")
+    }
+    randomBytes(b, 32, 127)
+    n := rand.Intn(len(b))
+    b[0] = '$'
+    str = string(b[:n])
+    parsePath([]byte(str))
+  }
+  fmt.Println()
 }
 
 
